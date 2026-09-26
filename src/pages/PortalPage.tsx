@@ -108,7 +108,7 @@ export function PortalPage({ token }: PortalPageProps) {
       <RetroGrid className="pointer-events-none absolute bottom-0 inset-x-0 h-[380px] opacity-25" />
 
       {/* Meteors shooting across the background sky above the endless road */}
-      <Meteors number={60} />
+      <Meteors number={40} />
 
       <div className="relative z-10">
         {/* Top Bar Header */}

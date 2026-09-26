@@ -189,7 +189,7 @@ export function AdminPage() {
       <RetroGrid className="pointer-events-none absolute bottom-0 inset-x-0 h-[450px] opacity-30" />
 
       {/* Meteors flying across the entire background sky above the endless road */}
-      <Meteors number={70} />
+      <Meteors number={40} />
 
       <div className="relative z-10">
         {/* Top Navbar */}

@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 import React from "react";
 
 export const Meteors = ({
-  number = 60,
+  number = 40,
   className,
 }: {
   number?: number;
@@ -12,23 +12,26 @@ export const Meteors = ({
 }) => {
   const meteors = new Array(number).fill(true);
   return (
-    <div className="pointer-events-none fixed inset-0 overflow-hidden z-0">
+    <div
+      className={cn(
+        "pointer-events-none fixed inset-x-0 top-0 h-[58vh] max-h-[580px] overflow-hidden z-0",
+        "[mask-image:linear-gradient(to_bottom,black_45%,transparent_98%)]",
+        "[-webkit-mask-image:linear-gradient(to_bottom,black_45%,transparent_98%)]",
+        className
+      )}
+    >
       {meteors.map((_, idx) => {
-        // Distribute meteors across the sky (-10% to 120% so edges are full)
+        // Distribute across upper sky
         const left = (Math.random() * 130 - 15).toFixed(1);
-        const top = (Math.random() * 55 - 15).toFixed(1);
+        const top = (Math.random() * 35 - 10).toFixed(1);
         const delay = (Math.random() * 5).toFixed(2);
-        const duration = (Math.random() * 2.5 + 2.2).toFixed(2);
-        const tailLength = Math.floor(Math.random() * 60 + 100);
+        const duration = (Math.random() * 2.5 + 2.4).toFixed(2);
+        const tailLength = Math.floor(Math.random() * 40 + 70); // 70px - 110px tail for distant perspective
 
         return (
           <span
             key={"meteor" + idx}
-            className={cn(
-              "animate-meteor-effect absolute h-1 w-1 rounded-full bg-emerald-300 shadow-[0_0_15px_4px_rgba(52,211,153,0.95)]",
-              "before:absolute before:top-1/2 before:h-[2px] before:-translate-y-[50%] before:transform before:bg-gradient-to-r before:from-emerald-300 before:via-teal-400/80 before:to-transparent before:content-['']",
-              className
-            )}
+            className="animate-meteor-effect absolute h-0.5 w-0.5 rounded-full bg-emerald-300 shadow-[0_0_10px_2px_rgba(52,211,153,0.85)] before:absolute before:top-1/2 before:h-[1px] before:-translate-y-[50%] before:transform before:bg-gradient-to-r before:from-emerald-300 before:via-teal-400/60 before:to-transparent before:content-['']"
             style={
               {
                 top: `${top}%`,
