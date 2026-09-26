@@ -117,7 +117,7 @@ test.describe('Utangmu - End-to-End Test Suite', () => {
 
     // Verifikasi tampilan portal personal
     await expect(page.locator('h1')).toContainText('Halo, Mas')
-    await expect(page.locator('text=Portal Pribadi')).toBeVisible()
+    await expect(page.locator('header')).toContainText('UTANGMU')
 
     // Verifikasi riwayat Mas tampil
     await expect(page.locator('text=Pinjaman awal modal usaha')).toBeVisible()

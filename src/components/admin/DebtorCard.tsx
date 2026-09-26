@@ -11,7 +11,7 @@ import {
   ExternalLink,
   MessageCircle,
 } from 'lucide-react'
-import { Card } from '@/components/ui/card'
+import { CardSpotlight } from '@/components/aceternity/card-spotlight'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { formatRupiah, formatShortNumber } from '@/lib/format'
@@ -85,9 +85,9 @@ export function DebtorCard({
   }
 
   return (
-    <Card
+    <CardSpotlight
       data-testid="debtor-card"
-      className="flex flex-col justify-between border-neutral-800/90 bg-neutral-900/60 p-5 hover:border-neutral-700/80 transition-all duration-200"
+      className="flex flex-col justify-between border-neutral-800/80 bg-neutral-900/60 p-5 hover:border-neutral-700/80 transition-all duration-300"
     >
       <div>
         {/* Header: Name, Status Badge, & Delete */}
@@ -239,6 +239,6 @@ export function DebtorCard({
           )}
         </Button>
       </div>
-    </Card>
+    </CardSpotlight>
   )
 }

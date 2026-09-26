@@ -1,5 +1,5 @@
 import { ArrowUpRight, CheckCircle2, DollarSign, Users } from 'lucide-react'
-import { Card } from '@/components/ui/card'
+import { CardSpotlight } from '@/components/aceternity/card-spotlight'
 import { NumberTicker } from '@/components/magicui/number-ticker'
 import { BorderBeam } from '@/components/magicui/border-beam'
 import { formatRupiah } from '@/lib/format'
@@ -19,8 +19,11 @@ export function SummaryCards({ debtors }: SummaryCardsProps) {
   return (
     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
       {/* Total Piutang Aktif (Hero Card) */}
-      <Card className="relative overflow-hidden border-emerald-500/30 bg-gradient-to-br from-emerald-950/40 via-neutral-900/60 to-neutral-900/80 p-5">
-        <BorderBeam size={180} duration={8} colorFrom="#10b981" colorTo="#059669" />
+      <CardSpotlight
+        spotlightColor="rgba(16, 185, 129, 0.2)"
+        className="relative overflow-hidden border-emerald-500/30 bg-gradient-to-br from-emerald-950/40 via-neutral-900/60 to-neutral-900/80 p-5"
+      >
+        <BorderBeam size={180} duration={8} colorFrom="#10b981" colorTo="#06b6d4" />
         <div className="flex items-center justify-between">
           <p className="text-xs font-semibold uppercase tracking-wider text-emerald-400">
             Total Piutang Belum Lunas
@@ -37,10 +40,13 @@ export function SummaryCards({ debtors }: SummaryCardsProps) {
             Dari total pinjaman {formatRupiah(totalBorrowed)}
           </p>
         </div>
-      </Card>
+      </CardSpotlight>
 
       {/* Total Sudah Dibayar */}
-      <Card className="p-5 border-neutral-800/80 bg-neutral-900/40">
+      <CardSpotlight
+        spotlightColor="rgba(59, 130, 246, 0.15)"
+        className="p-5 border-neutral-800/80 bg-neutral-900/40"
+      >
         <div className="flex items-center justify-between">
           <p className="text-xs font-semibold uppercase tracking-wider text-neutral-400">
             Total Sudah Dicicil/Lunas
@@ -53,12 +59,15 @@ export function SummaryCards({ debtors }: SummaryCardsProps) {
           <div className="text-2xl sm:text-3xl font-extrabold text-neutral-100">
             <NumberTicker value={totalPaid} />
           </div>
-          <p className="mt-1 text-xs text-neutral-400">Uang berhasil kembali</p>
+          <p className="mt-1 text-xs text-neutral-400">Uang kembali</p>
         </div>
-      </Card>
+      </CardSpotlight>
 
       {/* Jumlah Teman Masih Berutang */}
-      <Card className="p-5 border-neutral-800/80 bg-neutral-900/40">
+      <CardSpotlight
+        spotlightColor="rgba(245, 158, 11, 0.15)"
+        className="p-5 border-neutral-800/80 bg-neutral-900/40"
+      >
         <div className="flex items-center justify-between">
           <p className="text-xs font-semibold uppercase tracking-wider text-neutral-400">
             Teman Berutang Aktif
@@ -72,12 +81,15 @@ export function SummaryCards({ debtors }: SummaryCardsProps) {
             <span className="tabular-nums font-bold">{activeDebtorsCount}</span>
             <span className="text-sm font-normal text-neutral-400 ml-1.5">orang</span>
           </div>
-          <p className="mt-1 text-xs text-neutral-400">Dari total {debtors.length} teman terdaftar</p>
+          <p className="mt-1 text-xs text-neutral-400">Dari total {debtors.length} teman</p>
         </div>
-      </Card>
+      </CardSpotlight>
 
       {/* Jumlah Piutang Lunas */}
-      <Card className="p-5 border-neutral-800/80 bg-neutral-900/40">
+      <CardSpotlight
+        spotlightColor="rgba(16, 185, 129, 0.15)"
+        className="p-5 border-neutral-800/80 bg-neutral-900/40"
+      >
         <div className="flex items-center justify-between">
           <p className="text-xs font-semibold uppercase tracking-wider text-neutral-400">
             Piutang Lunas
@@ -91,9 +103,9 @@ export function SummaryCards({ debtors }: SummaryCardsProps) {
             <span className="tabular-nums font-bold">{settledDebtorsCount}</span>
             <span className="text-sm font-normal text-neutral-400 ml-1.5">orang</span>
           </div>
-          <p className="mt-1 text-xs text-neutral-400">100% terselesaikan</p>
+          <p className="mt-1 text-xs text-neutral-400">Terselesaikan</p>
         </div>
-      </Card>
+      </CardSpotlight>
     </div>
   )
 }
