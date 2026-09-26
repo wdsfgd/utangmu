@@ -49,7 +49,7 @@ export function SummaryCards({ debtors }: SummaryCardsProps) {
       >
         <div className="flex items-center justify-between">
           <p className="text-xs font-semibold uppercase tracking-wider text-neutral-400">
-            Total Sudah Dicicil/Lunas
+            Total Sudah Dibayar
           </p>
           <div className="rounded-lg bg-blue-500/10 p-2 text-blue-400">
             <ArrowUpRight className="h-5 w-5" />

@@ -184,7 +184,7 @@ export function AddTransactionModal({
     <Dialog
       open={open}
       onClose={onClose}
-      title={type === 'BORROW' ? `Catat Pinjaman Baru: ${debtor?.name}` : `Catat Pembayaran/Cicilan: ${debtor?.name}`}
+      title={type === 'BORROW' ? `Catat Pinjaman Baru: ${debtor?.name}` : `Catat Pembayaran: ${debtor?.name}`}
       description="Transaksi akan otomatis mengupdate sisa saldo dan langsung muncul di portal teman."
     >
       <form onSubmit={handleSubmit} className="space-y-4">
@@ -219,7 +219,7 @@ export function AddTransactionModal({
             }`}
           >
             <MinusCircle className="h-4 w-4 text-emerald-400" />
-            <span>Bayar / Cicil (-)</span>
+            <span>Catat Pembayaran (-)</span>
           </button>
         </div>
 
@@ -266,7 +266,7 @@ export function AddTransactionModal({
               Keterangan <span className="text-red-400">*</span>
             </label>
             <Input
-              placeholder={type === 'BORROW' ? 'Contoh: Pinjaman modal / beli tiket' : 'Contoh: Transfer BCA cicilan ke-1'}
+              placeholder={type === 'BORROW' ? 'Contoh: Pinjaman modal / beli tiket' : 'Contoh: Transfer BCA pembayaran ke-1'}
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               disabled={isSubmitting}

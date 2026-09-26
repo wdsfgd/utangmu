@@ -99,7 +99,7 @@ export function DebtorCard({
                 <Badge variant="success">Lunas</Badge>
               ) : isPartiallyPaid ? (
                 <Badge variant="secondary" className="bg-blue-950/60 text-blue-300 border-blue-800/60">
-                  Dicicil ({formatShortNumber(debtor.total_paid || 0)})
+                  Dibayar ({formatShortNumber(debtor.total_paid || 0)})
                 </Badge>
               ) : (
                 <Badge variant="warning">Belum Lunas</Badge>
@@ -218,7 +218,7 @@ export function DebtorCard({
             className="text-xs h-8.5 font-medium border-emerald-900/40 text-emerald-300 hover:bg-emerald-950/30"
           >
             <MinusCircle className="h-3.5 w-3.5 mr-1 text-emerald-400" />
-            + Cicil/Bayar
+            + Catat Bayar
           </Button>
         </div>
 

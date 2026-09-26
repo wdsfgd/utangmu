@@ -59,7 +59,7 @@ export function DebtorDetailModal({
         open={open}
         onClose={onClose}
         title={`Riwayat Lengkap: ${debtor.name}`}
-        description="Semua transaksi pinjaman, pembayaran cicilan, dan lampiran bukti otentik."
+        description="Semua transaksi pinjaman, riwayat pembayaran, dan lampiran bukti transaksi."
         className="max-w-2xl"
       >
         <div className="space-y-4">
@@ -72,7 +72,7 @@ export function DebtorDetailModal({
               </span>
             </div>
             <div className="text-center border-x border-neutral-800">
-              <span className="text-[11px] text-neutral-400 block">Total Dicicil</span>
+              <span className="text-[11px] text-neutral-400 block">Sudah Dibayar</span>
               <span className="text-sm sm:text-base font-bold text-blue-400">
                 {formatRupiah(debtor.total_paid || 0)}
               </span>
@@ -108,7 +108,7 @@ export function DebtorDetailModal({
                 className="h-8 text-xs font-semibold border-emerald-900/40 text-emerald-300 hover:bg-emerald-950/30"
               >
                 <MinusCircle className="h-3.5 w-3.5 mr-1" />
-                + Bayar/Cicil
+                + Catat Bayar
               </Button>
             </div>
 
@@ -145,7 +145,7 @@ export function DebtorDetailModal({
                           variant={isBorrow ? 'warning' : 'success'}
                           className="text-[10px] uppercase font-bold tracking-wider"
                         >
-                          {isBorrow ? '+ Pinjaman' : '- Cicilan'}
+                          {isBorrow ? '+ Pinjaman' : '- Pembayaran'}
                         </Badge>
                         <span className="text-[11px] text-neutral-400 flex items-center gap-1">
                           <Calendar className="h-3 w-3" />

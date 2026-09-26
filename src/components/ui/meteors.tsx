@@ -1,44 +1,46 @@
 "use client";
+
 import { cn } from "@/lib/utils";
-import { motion } from "motion/react";
 import React from "react";
 
 export const Meteors = ({
-  number,
+  number = 60,
   className,
 }: {
   number?: number;
   className?: string;
 }) => {
-  const meteors = new Array(number || 20).fill(true);
+  const meteors = new Array(number).fill(true);
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.5 }}
-    >
-      {meteors.map((el, idx) => {
-        const meteorCount = number || 20;
-        // Calculate position to evenly distribute meteors across container width
-        const position = idx * (800 / meteorCount) - 400; // Spread across 800px range, centered
+    <div className="pointer-events-none fixed inset-0 overflow-hidden z-0">
+      {meteors.map((_, idx) => {
+        // Distribute meteors across the sky (-10% to 120% so edges are full)
+        const left = (Math.random() * 130 - 15).toFixed(1);
+        const top = (Math.random() * 55 - 15).toFixed(1);
+        const delay = (Math.random() * 5).toFixed(2);
+        const duration = (Math.random() * 2.5 + 2.2).toFixed(2);
+        const tailLength = Math.floor(Math.random() * 60 + 100);
 
         return (
           <span
             key={"meteor" + idx}
             className={cn(
-              "animate-meteor-effect absolute h-0.5 w-0.5 rotate-[45deg] rounded-[9999px] bg-slate-500 shadow-[0_0_0_1px_#ffffff10]",
-              "before:absolute before:top-1/2 before:h-[1px] before:w-[50px] before:-translate-y-[50%] before:transform before:bg-gradient-to-r before:from-[#64748b] before:to-transparent before:content-['']",
-              className,
+              "animate-meteor-effect absolute h-1 w-1 rounded-full bg-emerald-300 shadow-[0_0_15px_4px_rgba(52,211,153,0.95)]",
+              "before:absolute before:top-1/2 before:h-[2px] before:-translate-y-[50%] before:transform before:bg-gradient-to-r before:from-emerald-300 before:via-teal-400/80 before:to-transparent before:content-['']",
+              className
             )}
-            style={{
-              top: "-40px", // Start above the container
-              left: position + "px",
-              animationDelay: Math.random() * 5 + "s", // Random delay between 0-5s
-              animationDuration: Math.floor(Math.random() * (10 - 5) + 5) + "s", // Keep some randomness in duration
-            }}
-          ></span>
+            style={
+              {
+                top: `${top}%`,
+                left: `${left}%`,
+                animationDelay: `${delay}s`,
+                animationDuration: `${duration}s`,
+                "--meteor-tail": `${tailLength}px`,
+              } as React.CSSProperties
+            }
+          />
         );
       })}
-    </motion.div>
+    </div>
   );
 };

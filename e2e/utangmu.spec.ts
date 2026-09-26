@@ -16,7 +16,7 @@ test.describe('Utangmu - End-to-End Test Suite', () => {
 
     // Verifikasi 4 Kartu Ringkasan
     await expect(page.locator('text=Total Piutang Belum Lunas')).toBeVisible()
-    await expect(page.locator('text=Total Sudah Dicicil/Lunas')).toBeVisible()
+    await expect(page.locator('text=Total Sudah Dibayar')).toBeVisible()
     await expect(page.locator('text=Teman Berutang Aktif')).toBeVisible()
 
     // Verifikasi Kartu Contoh (Mas & Rian dari data awal)
@@ -100,7 +100,7 @@ test.describe('Utangmu - End-to-End Test Suite', () => {
 
     // Verifikasi Sisa Saldo: Rp 500.000 - Rp 200.000 = Rp 300.000
     await expect(doniCard.locator('[data-testid="debtor-balance"]')).toContainText('Rp 300.000')
-    await expect(doniCard).toContainText('Dicicil')
+    await expect(doniCard).toContainText('Dibayar')
   })
 
   test('5. Portal Privat Teman (/view/:token): Hanya teman bersangkutan yang bisa melihat utangnya', async ({ page }) => {

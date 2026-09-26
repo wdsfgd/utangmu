@@ -76,7 +76,7 @@ body {
     opacity: 1;
   }
   100% {
-    transform: rotate(215deg) translateX(-500px);
+    transform: rotate(215deg) translateX(-1400px);
     opacity: 0;
   }
 }
@@ -102,8 +102,13 @@ body {
   }
 }
 
-.animate-meteor {
-  animation: meteor 5s linear infinite;
+.animate-meteor,
+.animate-meteor-effect {
+  animation: meteor 3.5s linear infinite;
+}
+
+.animate-meteor-effect::before {
+  width: var(--meteor-tail, 130px);
 }
 
 .animate-shimmer-slide {

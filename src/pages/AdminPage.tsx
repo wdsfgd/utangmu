@@ -146,7 +146,7 @@ export function AdminPage() {
       onClick: () => setStatusFilter('UNPAID'),
     },
     {
-      title: 'Dicicil',
+      title: 'Dibayar Sebagian',
       icon: <Clock className="h-full w-full text-blue-400" />,
       onClick: () => setStatusFilter('PARTIALLY_PAID'),
     },
@@ -185,8 +185,11 @@ export function AdminPage() {
         refresh
       />
 
-      {/* Retro 3D Grid on background bottom */}
-      <RetroGrid className="pointer-events-none absolute bottom-0 inset-x-0 h-[400px] opacity-25" />
+      {/* Retro 3D Grid on background bottom (Endless road) */}
+      <RetroGrid className="pointer-events-none absolute bottom-0 inset-x-0 h-[450px] opacity-30" />
+
+      {/* Meteors flying across the entire background sky above the endless road */}
+      <Meteors number={70} />
 
       <div className="relative z-10">
         {/* Top Navbar */}
@@ -198,10 +201,8 @@ export function AdminPage() {
         />
 
         <main className="mx-auto max-w-7xl px-4 sm:px-6 pt-6 space-y-6">
-          {/* Hero Section dengan Sparkles, FlipWords, Meteors, & ShimmerButton */}
+          {/* Hero Section dengan Sparkles, FlipWords, & ShimmerButton */}
           <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-neutral-900/90 via-neutral-900/70 to-emerald-950/30 p-6 sm:p-8 backdrop-blur-xl shadow-2xl">
-            <Meteors number={28} />
-
             <div className="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between gap-5">
               <div>
                 <div className="inline-flex items-center gap-2 mb-2">
@@ -220,7 +221,7 @@ export function AdminPage() {
                     Kelola
                   </h1>
                   <FlipWords
-                    words={['Piutang', 'Cicilan', 'Catatan Teman', 'Bukti Transfer']}
+                    words={['Piutang', 'Pembayaran', 'Catatan Teman', 'Bukti Transfer']}
                     className="text-2xl sm:text-4xl font-black text-emerald-400"
                   />
                 </div>
@@ -282,7 +283,7 @@ export function AdminPage() {
               {[
                 { key: 'ALL', label: 'Semua' },
                 { key: 'UNPAID', label: 'Belum Lunas' },
-                { key: 'PARTIALLY_PAID', label: 'Dicicil' },
+                { key: 'PARTIALLY_PAID', label: 'Dibayar Sebagian' },
                 { key: 'SETTLED', label: 'Lunas' },
               ].map((tab) => (
                 <button

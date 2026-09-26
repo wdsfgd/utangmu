@@ -104,7 +104,11 @@ export function PortalPage({ token }: PortalPageProps) {
         color="#10b981"
         refresh
       />
-      <RetroGrid className="pointer-events-none absolute bottom-0 inset-x-0 h-[300px] opacity-20" />
+      {/* Retro 3D Grid on background bottom (Endless road) */}
+      <RetroGrid className="pointer-events-none absolute bottom-0 inset-x-0 h-[380px] opacity-25" />
+
+      {/* Meteors shooting across the background sky above the endless road */}
+      <Meteors number={60} />
 
       <div className="relative z-10">
         {/* Top Bar Header */}
@@ -132,7 +136,7 @@ export function PortalPage({ token }: PortalPageProps) {
               </SparklesText>
             </h1>
             <p className="text-xs text-neutral-400 mt-1">
-              Rincian riwayat pinjaman & cicilan kamu.
+              Rincian riwayat pinjaman dan pembayaran utang kamu.
             </p>
           </div>
 
@@ -141,14 +145,13 @@ export function PortalPage({ token }: PortalPageProps) {
             color="#10b981"
             className="relative overflow-hidden border-emerald-500/40 bg-gradient-to-br from-neutral-900 via-neutral-900/90 to-emerald-950/30 p-6 shadow-2xl"
           >
-            <Meteors number={15} />
             <BorderBeam size={220} duration={10} colorFrom="#10b981" colorTo="#06b6d4" />
             <Ripple mainCircleSize={140} numCircles={5} mainCircleOpacity={0.15} className="z-0" />
 
             <div className="relative z-10">
               <div className="flex items-center justify-between">
                 <span className="text-xs font-semibold uppercase tracking-wider text-emerald-400">
-                  Sisa Saldo
+                  Sisa Utang Belum Lunas
                 </span>
                 {isSettled ? (
                   <Badge variant="success" className="text-xs px-2.5 py-0.5">
@@ -156,11 +159,11 @@ export function PortalPage({ token }: PortalPageProps) {
                   </Badge>
                 ) : summary.total_paid > 0 ? (
                   <Badge variant="secondary" className="bg-blue-950 text-blue-300 border-blue-800 text-xs">
-                    Sedang Dicicil
+                    Dibayar Sebagian
                   </Badge>
                 ) : (
                   <Badge variant="warning" className="text-xs">
-                    Belum Dicicil
+                    Belum Ada Pembayaran
                   </Badge>
                 )}
               </div>
@@ -186,7 +189,7 @@ export function PortalPage({ token }: PortalPageProps) {
                   </span>
                 </div>
                 <div>
-                  <span className="text-[11px] text-neutral-400 block">Total Dicicil</span>
+                  <span className="text-[11px] text-neutral-400 block">Sudah Dibayar</span>
                   <span className="text-sm font-bold text-blue-400">
                     {formatRupiah(summary.total_paid)}
                   </span>
@@ -199,7 +202,7 @@ export function PortalPage({ token }: PortalPageProps) {
           <div className="space-y-3">
             <div className="flex items-center justify-between">
               <h2 className="text-sm font-bold text-neutral-200">
-                Riwayat Transaksi ({transactions.length})
+                Riwayat Pinjaman & Pembayaran ({transactions.length})
               </h2>
               <span className="text-[11px] text-neutral-400">Terbaru</span>
             </div>
