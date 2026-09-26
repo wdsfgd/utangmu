@@ -10,12 +10,13 @@ import {
 } from 'lucide-react'
 import { Card } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
-import { CardSpotlight } from '@/components/aceternity/card-spotlight'
-import { CloudShader } from '@/components/aceternity/cloud-shader'
-import { Meteors } from '@/components/aceternity/meteors'
-import { NumberTicker } from '@/components/magicui/number-ticker'
-import { BorderBeam } from '@/components/magicui/border-beam'
-import { triggerSettledConfetti } from '@/components/magicui/confetti'
+import { CardSpotlight } from '@/components/ui/card-spotlight'
+import { CloudShader } from '@/components/ui/cloud-shader'
+import { Meteors } from '@/components/ui/meteors'
+import { NumberTicker } from '@/components/ui/number-ticker'
+import { BorderBeam } from '@/components/ui/border-beam'
+import { triggerSettledConfetti } from '@/components/ui/confetti'
+import { Particles } from '@/components/ui/particles'
 import { ProofModal } from '@/components/admin/ProofModal'
 import { formatRupiah, formatDate } from '@/lib/format'
 import { dbService } from '@/lib/db'
@@ -88,8 +89,18 @@ export function PortalPage({ token }: PortalPageProps) {
   const isSettled = summary.is_settled
 
   return (
-    <CloudShader>
-      <div className="min-h-screen text-neutral-100 pb-16 selection:bg-emerald-500/30">
+    <div className="relative min-h-screen bg-neutral-950 text-neutral-100 pb-16 selection:bg-emerald-500/30 overflow-hidden">
+      {/* Background visual effects */}
+      <CloudShader />
+      <Particles
+        className="pointer-events-none absolute inset-0 z-0"
+        quantity={45}
+        ease={70}
+        color="#10b981"
+        refresh
+      />
+
+      <div className="relative z-10">
         {/* Top Bar Header */}
         <header className="border-b border-white/5 bg-neutral-950/70 backdrop-blur-xl sticky top-0 z-30">
           <div className="max-w-xl mx-auto px-4 h-14 flex items-center justify-between">
@@ -116,10 +127,10 @@ export function PortalPage({ token }: PortalPageProps) {
 
           {/* Hero Card Saldo Sisa Utang */}
           <CardSpotlight
-            spotlightColor="rgba(16, 185, 129, 0.25)"
+            color="#10b981"
             className="relative overflow-hidden border-emerald-500/40 bg-gradient-to-br from-neutral-900 via-neutral-900/90 to-emerald-950/30 p-6 shadow-2xl"
           >
-            <Meteors number={12} />
+            <Meteors number={15} />
             <BorderBeam size={220} duration={10} colorFrom="#10b981" colorTo="#06b6d4" />
 
             <div className="relative z-10">
@@ -194,7 +205,7 @@ export function PortalPage({ token }: PortalPageProps) {
                   return (
                     <CardSpotlight
                       key={tx.id}
-                      spotlightColor={isBorrow ? 'rgba(245, 158, 11, 0.12)' : 'rgba(16, 185, 129, 0.12)'}
+                      color={isBorrow ? '#f59e0b' : '#10b981'}
                       className="p-4 border-neutral-800/80 bg-neutral-900/50 hover:border-neutral-700 transition-all"
                     >
                       <div className="flex items-start justify-between gap-3">
@@ -283,6 +294,6 @@ export function PortalPage({ token }: PortalPageProps) {
           title="Bukti Transaksi"
         />
       </div>
-    </CloudShader>
+    </div>
   )
 }

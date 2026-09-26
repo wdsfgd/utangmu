@@ -11,7 +11,7 @@ import {
   ExternalLink,
   MessageCircle,
 } from 'lucide-react'
-import { CardSpotlight } from '@/components/aceternity/card-spotlight'
+import { CardSpotlight } from '@/components/ui/card-spotlight'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { formatRupiah, formatShortNumber } from '@/lib/format'

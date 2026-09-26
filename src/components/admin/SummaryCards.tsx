@@ -1,7 +1,7 @@
 import { ArrowUpRight, CheckCircle2, DollarSign, Users } from 'lucide-react'
-import { CardSpotlight } from '@/components/aceternity/card-spotlight'
-import { NumberTicker } from '@/components/magicui/number-ticker'
-import { BorderBeam } from '@/components/magicui/border-beam'
+import { CardSpotlight } from '@/components/ui/card-spotlight'
+import { NumberTicker } from '@/components/ui/number-ticker'
+import { BorderBeam } from '@/components/ui/border-beam'
 import { formatRupiah } from '@/lib/format'
 import type { Debtor } from '@/types'
 
@@ -20,7 +20,7 @@ export function SummaryCards({ debtors }: SummaryCardsProps) {
     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
       {/* Total Piutang Aktif (Hero Card) */}
       <CardSpotlight
-        spotlightColor="rgba(16, 185, 129, 0.2)"
+        color="#10b981"
         className="relative overflow-hidden border-emerald-500/30 bg-gradient-to-br from-emerald-950/40 via-neutral-900/60 to-neutral-900/80 p-5"
       >
         <BorderBeam size={180} duration={8} colorFrom="#10b981" colorTo="#06b6d4" />
@@ -44,7 +44,7 @@ export function SummaryCards({ debtors }: SummaryCardsProps) {
 
       {/* Total Sudah Dibayar */}
       <CardSpotlight
-        spotlightColor="rgba(59, 130, 246, 0.15)"
+        color="#3b82f6"
         className="p-5 border-neutral-800/80 bg-neutral-900/40"
       >
         <div className="flex items-center justify-between">
@@ -65,7 +65,7 @@ export function SummaryCards({ debtors }: SummaryCardsProps) {
 
       {/* Jumlah Teman Masih Berutang */}
       <CardSpotlight
-        spotlightColor="rgba(245, 158, 11, 0.15)"
+        color="#f59e0b"
         className="p-5 border-neutral-800/80 bg-neutral-900/40"
       >
         <div className="flex items-center justify-between">
@@ -87,7 +87,7 @@ export function SummaryCards({ debtors }: SummaryCardsProps) {
 
       {/* Jumlah Piutang Lunas */}
       <CardSpotlight
-        spotlightColor="rgba(16, 185, 129, 0.15)"
+        color="#10b981"
         className="p-5 border-neutral-800/80 bg-neutral-900/40"
       >
         <div className="flex items-center justify-between">

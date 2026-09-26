@@ -1,6 +1,6 @@
 import { RefreshCw, Plus } from 'lucide-react'
 import { Button } from '@/components/ui/button'
-import { ShimmerButton } from '@/components/aceternity/shimmer-button'
+import { ShimmerButton } from '@/components/ui/shimmer-button'
 import { isSupabaseConfigured } from '@/lib/db'
 
 interface NavbarProps {

@@ -7,10 +7,12 @@ import { AddDebtorModal } from '@/components/admin/AddDebtorModal'
 import { AddTransactionModal } from '@/components/admin/AddTransactionModal'
 import { DebtorDetailModal } from '@/components/admin/DebtorDetailModal'
 import { WhatsAppShareModal } from '@/components/admin/WhatsAppShareModal'
-import { CloudShader } from '@/components/aceternity/cloud-shader'
-import { Meteors } from '@/components/aceternity/meteors'
-import { MorphingText } from '@/components/magicui/morphing-text'
-import { ShimmerButton } from '@/components/aceternity/shimmer-button'
+import { CloudShader } from '@/components/ui/cloud-shader'
+import { Meteors } from '@/components/ui/meteors'
+import { MorphingText } from '@/components/ui/morphing-text'
+import { FlipWords } from '@/components/ui/flip-words'
+import { ShimmerButton } from '@/components/ui/shimmer-button'
+import { Particles } from '@/components/ui/particles'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { dbService } from '@/lib/db'
@@ -40,13 +42,8 @@ export function AdminPage() {
     try {
       const data = await dbService.getDebtors()
       setDebtors(data)
-
-      if (detailModalDebtor) {
-        const updated = data.find((d) => d.id === detailModalDebtor.id)
-        if (updated) setDetailModalDebtor(updated)
-      }
-    } catch (err) {
-      console.error('Gagal memuat data:', err)
+    } catch (error) {
+      console.error('Failed to load debtors:', error)
     } finally {
       setLoading(false)
     }
@@ -56,17 +53,20 @@ export function AdminPage() {
     loadData()
   }, [])
 
-  // Filter & Search
+  // Filtered and searched debtors list
   const filteredDebtors = useMemo(() => {
     return debtors.filter((d) => {
       const matchesSearch =
         d.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        (d.phone && d.phone.includes(searchQuery))
+        Boolean(d.phone && d.phone.includes(searchQuery))
 
-      if (!matchesSearch) return false
+      const matchesStatus =
+        statusFilter === 'ALL' ||
+        (statusFilter === 'UNPAID' && d.status === 'UNPAID') ||
+        (statusFilter === 'PARTIALLY_PAID' && d.status === 'PARTIALLY_PAID') ||
+        (statusFilter === 'SETTLED' && d.status === 'SETTLED')
 
-      if (statusFilter === 'ALL') return true
-      return d.status === statusFilter
+      return matchesSearch && matchesStatus
     })
   }, [debtors, searchQuery, statusFilter])
 
@@ -116,8 +116,18 @@ export function AdminPage() {
   }
 
   return (
-    <CloudShader>
-      <div className="min-h-screen text-neutral-100 pb-20 selection:bg-emerald-500/30">
+    <div className="relative min-h-screen bg-neutral-950 text-neutral-100 pb-20 selection:bg-emerald-500/30 overflow-hidden">
+      {/* Dynamic Backgrounds */}
+      <CloudShader />
+      <Particles
+        className="pointer-events-none absolute inset-0 z-0"
+        quantity={60}
+        ease={70}
+        color="#10b981"
+        refresh
+      />
+
+      <div className="relative z-10">
         {/* Top Navbar */}
         <Navbar
           onOpenAddDebtor={() => setIsAddDebtorOpen(true)}
@@ -127,22 +137,22 @@ export function AdminPage() {
         />
 
         <main className="mx-auto max-w-7xl px-4 sm:px-6 pt-6 space-y-6">
-          {/* Hero Section dengan Morphing Text & Meteors */}
+          {/* Hero Section dengan Morphing Text, Flip Words, & Meteors */}
           <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-neutral-900/80 via-neutral-900/60 to-emerald-950/20 p-6 sm:p-8 backdrop-blur-xl">
-            <Meteors number={20} />
+            <Meteors number={25} />
 
             <div className="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between gap-5">
               <div>
                 <p className="text-xs font-semibold uppercase tracking-wider text-emerald-400 mb-1">
                   Dashboard
                 </p>
-                <div className="flex items-center gap-3">
+                <div className="flex flex-wrap items-center gap-2">
                   <h1 className="text-2xl sm:text-4xl font-black tracking-tight text-neutral-100">
                     Kelola
                   </h1>
-                  <MorphingText
-                    texts={['Piutang', 'Cicilan', 'Catatan Teman', 'Bukti Transfer']}
-                    className="h-10 text-2xl sm:text-4xl"
+                  <FlipWords
+                    words={['Piutang', 'Cicilan', 'Catatan Teman', 'Bukti Transfer']}
+                    className="text-2xl sm:text-4xl font-black text-emerald-400"
                   />
                 </div>
               </div>
@@ -151,7 +161,7 @@ export function AdminPage() {
                 onClick={() => setIsAddDebtorOpen(true)}
                 className="h-11 px-5 text-sm font-semibold shrink-0"
               >
-                <Plus className="h-4 w-4 text-emerald-400" />
+                <Plus className="h-4 w-4 text-emerald-400 mr-2 inline" />
                 <span>Tambah Teman</span>
               </ShimmerButton>
             </div>
@@ -166,77 +176,61 @@ export function AdminPage() {
             <div className="relative flex-1 max-w-md">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-neutral-500" />
               <Input
-                placeholder="Cari nama teman atau no HP..."
+                placeholder="Cari nama teman atau keterangan..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-9 h-10 text-xs bg-neutral-900/60 border-neutral-800"
+                className="pl-9 bg-neutral-900/80 border-neutral-800 text-sm h-10 rounded-xl"
               />
             </div>
 
-            {/* Status Filter Tabs */}
+            {/* Filter Tabs */}
             <div className="flex items-center gap-1.5 overflow-x-auto pb-1 sm:pb-0">
-              <button
-                onClick={() => setStatusFilter('ALL')}
-                className={`rounded-xl px-3.5 py-2 text-xs font-semibold whitespace-nowrap transition-all ${
-                  statusFilter === 'ALL'
-                    ? 'bg-neutral-100 text-neutral-900 shadow-md'
-                    : 'text-neutral-400 hover:text-neutral-200 hover:bg-neutral-900/60'
-                }`}
-              >
-                Semua ({debtors.length})
-              </button>
-              <button
-                onClick={() => setStatusFilter('UNPAID')}
-                className={`rounded-xl px-3.5 py-2 text-xs font-semibold whitespace-nowrap transition-all ${
-                  statusFilter === 'UNPAID'
-                    ? 'bg-amber-500/20 text-amber-300 border border-amber-500/30 shadow-md'
-                    : 'text-neutral-400 hover:text-neutral-200 hover:bg-neutral-900/60'
-                }`}
-              >
-                Belum Dicicil
-              </button>
-              <button
-                onClick={() => setStatusFilter('PARTIALLY_PAID')}
-                className={`rounded-xl px-3.5 py-2 text-xs font-semibold whitespace-nowrap transition-all ${
-                  statusFilter === 'PARTIALLY_PAID'
-                    ? 'bg-blue-500/20 text-blue-300 border border-blue-500/30 shadow-md'
-                    : 'text-neutral-400 hover:text-neutral-200 hover:bg-neutral-900/60'
-                }`}
-              >
-                Sedang Dicicil
-              </button>
-              <button
-                onClick={() => setStatusFilter('SETTLED')}
-                className={`rounded-xl px-3.5 py-2 text-xs font-semibold whitespace-nowrap transition-all ${
-                  statusFilter === 'SETTLED'
-                    ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 shadow-md'
-                    : 'text-neutral-400 hover:text-neutral-200 hover:bg-neutral-900/60'
-                }`}
-              >
-                Lunas
-              </button>
+              <Filter className="h-4 w-4 text-neutral-500 mr-1 hidden sm:block shrink-0" />
+              {[
+                { key: 'ALL', label: 'Semua' },
+                { key: 'UNPAID', label: 'Belum Lunas' },
+                { key: 'PARTIALLY_PAID', label: 'Dicicil' },
+                { key: 'SETTLED', label: 'Lunas' },
+              ].map((tab) => (
+                <button
+                  key={tab.key}
+                  onClick={() => setStatusFilter(tab.key as any)}
+                  className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all whitespace-nowrap cursor-pointer ${
+                    statusFilter === tab.key
+                      ? 'bg-neutral-100 text-neutral-950 font-bold shadow'
+                      : 'text-neutral-400 hover:text-neutral-200 hover:bg-neutral-800/60'
+                  }`}
+                >
+                  {tab.label}
+                </button>
+              ))}
             </div>
           </div>
 
-          {/* Debtor Cards Grid */}
+          {/* Debtor Grid List */}
           {loading ? (
-            <div className="p-12 text-center text-xs text-neutral-400 animate-pulse">
-              Memuat data...
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {[1, 2, 3].map((n) => (
+                <div
+                  key={n}
+                  className="h-48 rounded-2xl bg-neutral-900/50 border border-neutral-800/50 animate-pulse"
+                />
+              ))}
             </div>
           ) : filteredDebtors.length === 0 ? (
-            <div className="rounded-2xl border border-dashed border-neutral-800 p-12 text-center space-y-3">
-              <div className="h-12 w-12 rounded-full bg-neutral-900 text-neutral-500 flex items-center justify-center mx-auto">
-                <Filter className="h-6 w-6" />
+            <div className="flex flex-col items-center justify-center py-16 text-center border border-dashed border-neutral-800 rounded-3xl bg-neutral-900/20 backdrop-blur-sm">
+              <div className="h-12 w-12 rounded-full bg-neutral-800/80 flex items-center justify-center text-neutral-400 mb-3">
+                <Search className="h-6 w-6" />
               </div>
-              <div>
-                <p className="text-sm font-semibold text-neutral-300">Tidak ada data teman yang cocok</p>
-                <p className="text-xs text-neutral-500 mt-1">
-                  {searchQuery ? 'Coba ganti kata kunci pencarian.' : 'Mulai dengan menambahkan catatan teman.'}
-                </p>
-              </div>
+              <h3 className="font-semibold text-neutral-200 text-base">Tidak ada catatan ditemukan</h3>
+              <p className="text-xs text-neutral-500 max-w-sm mt-1">
+                {searchQuery
+                  ? `Tidak ada hasil pencarian untuk "${searchQuery}".`
+                  : 'Belum ada teman yang didaftarkan dalam kategori ini.'}
+              </p>
               {!searchQuery && (
                 <Button
-                  variant="emerald"
+                  variant="outline"
                   size="sm"
                   onClick={() => setIsAddDebtorOpen(true)}
                   className="mt-2"
@@ -275,8 +269,8 @@ export function AdminPage() {
         <AddTransactionModal
           open={transactionModalState.open}
           onClose={() =>
-            setTransactionModalState({ open: false, debtor: null, type: 'BORROW' })
-          }
+            setTransactionModalState({ open: false, debtor: null, type: 'BORROW' }
+          )}
           debtor={transactionModalState.debtor}
           initialType={transactionModalState.type}
           onSave={handleSaveTransaction}
@@ -286,9 +280,13 @@ export function AdminPage() {
           open={Boolean(detailModalDebtor)}
           onClose={() => setDetailModalDebtor(null)}
           debtor={detailModalDebtor}
-          onAddTransaction={(d, type) =>
-            setTransactionModalState({ open: true, debtor: d, type })
-          }
+          onAddTransaction={(d, type) => {
+            setTransactionModalState({
+              open: true,
+              debtor: d,
+              type,
+            })
+          }}
           onDeleteTransaction={handleDeleteTransaction}
         />
 
@@ -298,6 +296,6 @@ export function AdminPage() {
           debtor={whatsAppModalDebtor}
         />
       </div>
-    </CloudShader>
+    </div>
   )
 }
