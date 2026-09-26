@@ -1,5 +1,17 @@
 import { useState, useEffect, useMemo } from 'react'
-import { Plus, Search, Filter } from 'lucide-react'
+import {
+  Plus,
+  Search,
+  Filter,
+  Users,
+  CheckCircle2,
+  AlertCircle,
+  Clock,
+  Sparkles,
+  LayoutGrid,
+  RefreshCw,
+  UserPlus,
+} from 'lucide-react'
 import { Navbar } from '@/components/layout/Navbar'
 import { SummaryCards } from '@/components/admin/SummaryCards'
 import { DebtorCard } from '@/components/admin/DebtorCard'
@@ -9,12 +21,18 @@ import { DebtorDetailModal } from '@/components/admin/DebtorDetailModal'
 import { WhatsAppShareModal } from '@/components/admin/WhatsAppShareModal'
 import { CloudShader } from '@/components/ui/cloud-shader'
 import { Meteors } from '@/components/ui/meteors'
-import { MorphingText } from '@/components/ui/morphing-text'
 import { FlipWords } from '@/components/ui/flip-words'
 import { ShimmerButton } from '@/components/ui/shimmer-button'
 import { Particles } from '@/components/ui/particles'
+import { Spotlight } from '@/components/ui/spotlight'
+import { RetroGrid } from '@/components/ui/retro-grid'
+import { Marquee } from '@/components/ui/marquee'
+import { AnimatedGradientText } from '@/components/ui/animated-gradient-text'
+import { SparklesText } from '@/components/ui/sparkles-text'
+import { FloatingDock, type FloatingDockItem } from '@/components/ui/floating-dock'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
+import { formatRupiah } from '@/lib/format'
 import { dbService } from '@/lib/db'
 import type { Debtor, TransactionType } from '@/types'
 
@@ -115,17 +133,60 @@ export function AdminPage() {
     }
   }
 
+  // Floating dock items
+  const dockItems: FloatingDockItem[] = [
+    {
+      title: 'Semua',
+      icon: <LayoutGrid className="h-full w-full" />,
+      onClick: () => setStatusFilter('ALL'),
+    },
+    {
+      title: 'Belum Lunas',
+      icon: <AlertCircle className="h-full w-full text-amber-400" />,
+      onClick: () => setStatusFilter('UNPAID'),
+    },
+    {
+      title: 'Dicicil',
+      icon: <Clock className="h-full w-full text-blue-400" />,
+      onClick: () => setStatusFilter('PARTIALLY_PAID'),
+    },
+    {
+      title: 'Lunas',
+      icon: <CheckCircle2 className="h-full w-full text-emerald-400" />,
+      onClick: () => setStatusFilter('SETTLED'),
+    },
+    {
+      title: 'Tambah Teman',
+      icon: <UserPlus className="h-full w-full text-emerald-300" />,
+      onClick: () => setIsAddDebtorOpen(true),
+    },
+    {
+      title: 'Reset Data',
+      icon: <RefreshCw className="h-full w-full text-neutral-400" />,
+      onClick: handleResetData,
+    },
+  ]
+
   return (
-    <div className="relative min-h-screen bg-neutral-950 text-neutral-100 pb-20 selection:bg-emerald-500/30 overflow-hidden">
-      {/* Dynamic Backgrounds */}
+    <div className="relative min-h-screen bg-neutral-950 text-neutral-100 pb-28 selection:bg-emerald-500/30 overflow-hidden">
+      {/* Spotlight Effect from top corners */}
+      <Spotlight className="-top-40 left-0 md:left-60 md:-top-20" fill="#10b981" />
+      <Spotlight className="-top-40 right-0 md:right-40 md:-top-20" fill="#06b6d4" />
+
+      {/* GPU WebGL Cloud Shader */}
       <CloudShader />
+
+      {/* Interactive Floating Particles */}
       <Particles
         className="pointer-events-none absolute inset-0 z-0"
-        quantity={60}
-        ease={70}
+        quantity={65}
+        ease={60}
         color="#10b981"
         refresh
       />
+
+      {/* Retro 3D Grid on background bottom */}
+      <RetroGrid className="pointer-events-none absolute bottom-0 inset-x-0 h-[400px] opacity-25" />
 
       <div className="relative z-10">
         {/* Top Navbar */}
@@ -137,16 +198,24 @@ export function AdminPage() {
         />
 
         <main className="mx-auto max-w-7xl px-4 sm:px-6 pt-6 space-y-6">
-          {/* Hero Section dengan Morphing Text, Flip Words, & Meteors */}
-          <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-neutral-900/80 via-neutral-900/60 to-emerald-950/20 p-6 sm:p-8 backdrop-blur-xl">
-            <Meteors number={25} />
+          {/* Hero Section dengan Sparkles, FlipWords, Meteors, & ShimmerButton */}
+          <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-neutral-900/90 via-neutral-900/70 to-emerald-950/30 p-6 sm:p-8 backdrop-blur-xl shadow-2xl">
+            <Meteors number={28} />
 
             <div className="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between gap-5">
               <div>
-                <p className="text-xs font-semibold uppercase tracking-wider text-emerald-400 mb-1">
-                  Dashboard
-                </p>
-                <div className="flex flex-wrap items-center gap-2">
+                <div className="inline-flex items-center gap-2 mb-2">
+                  <span className="flex h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
+                  <AnimatedGradientText
+                    colorFrom="#10b981"
+                    colorTo="#06b6d4"
+                    className="text-xs font-bold uppercase tracking-wider"
+                  >
+                    Catatan Keuangan Real-Time
+                  </AnimatedGradientText>
+                </div>
+
+                <div className="flex flex-wrap items-center gap-3">
                   <h1 className="text-2xl sm:text-4xl font-black tracking-tight text-neutral-100">
                     Kelola
                   </h1>
@@ -166,6 +235,30 @@ export function AdminPage() {
               </ShimmerButton>
             </div>
           </div>
+
+          {/* Activity Marquee Ticker */}
+          {debtors.length > 0 && (
+            <div className="relative overflow-hidden rounded-2xl border border-neutral-800/80 bg-neutral-900/40 backdrop-blur-md py-2">
+              <Marquee pauseOnHover className="[--duration:30s]">
+                {debtors.map((d) => (
+                  <div
+                    key={d.id}
+                    className="flex items-center gap-2.5 mx-3 px-3 py-1 rounded-xl bg-neutral-800/60 border border-neutral-700/50 text-xs"
+                  >
+                    <span className="font-bold text-neutral-200">{d.name}</span>
+                    <span className="text-neutral-500">•</span>
+                    <span className={d.status === 'SETTLED' ? 'text-emerald-400 font-semibold' : 'text-amber-400 font-semibold'}>
+                      {d.status === 'SETTLED' ? 'LUNAS' : formatRupiah(d.remaining_balance || 0)}
+                    </span>
+                    <span className="text-neutral-500">•</span>
+                    <span className="text-neutral-400 text-[11px]">
+                      {d.transactions?.length || 0} transaksi
+                    </span>
+                  </div>
+                ))}
+              </Marquee>
+            </div>
+          )}
 
           {/* Summary Stat Cards */}
           <SummaryCards debtors={debtors} />
@@ -258,6 +351,11 @@ export function AdminPage() {
             </div>
           )}
         </main>
+
+        {/* Floating Dock Navigation at bottom center */}
+        <div className="fixed bottom-6 inset-x-0 z-40 flex justify-center pointer-events-auto">
+          <FloatingDock items={dockItems} />
+        </div>
 
         {/* Modals */}
         <AddDebtorModal

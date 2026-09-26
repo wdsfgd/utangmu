@@ -17,6 +17,10 @@ import { NumberTicker } from '@/components/ui/number-ticker'
 import { BorderBeam } from '@/components/ui/border-beam'
 import { triggerSettledConfetti } from '@/components/ui/confetti'
 import { Particles } from '@/components/ui/particles'
+import { Spotlight } from '@/components/ui/spotlight'
+import { RetroGrid } from '@/components/ui/retro-grid'
+import { Ripple } from '@/components/ui/ripple'
+import { SparklesText } from '@/components/ui/sparkles-text'
 import { ProofModal } from '@/components/admin/ProofModal'
 import { formatRupiah, formatDate } from '@/lib/format'
 import { dbService } from '@/lib/db'
@@ -91,14 +95,16 @@ export function PortalPage({ token }: PortalPageProps) {
   return (
     <div className="relative min-h-screen bg-neutral-950 text-neutral-100 pb-16 selection:bg-emerald-500/30 overflow-hidden">
       {/* Background visual effects */}
+      <Spotlight className="-top-40 left-0 md:left-20" fill="#10b981" />
       <CloudShader />
       <Particles
         className="pointer-events-none absolute inset-0 z-0"
-        quantity={45}
-        ease={70}
+        quantity={50}
+        ease={65}
         color="#10b981"
         refresh
       />
+      <RetroGrid className="pointer-events-none absolute bottom-0 inset-x-0 h-[300px] opacity-20" />
 
       <div className="relative z-10">
         {/* Top Bar Header */}
@@ -115,23 +121,29 @@ export function PortalPage({ token }: PortalPageProps) {
         </header>
 
         <main className="max-w-xl mx-auto px-4 pt-6 space-y-6">
-          {/* Greeting */}
+          {/* Greeting dengan SparklesText */}
           <div>
-            <h1 className="text-2xl sm:text-3xl font-black text-neutral-100">
-              Halo, {debtor.name} 👋
+            <h1>
+              <SparklesText
+                className="text-2xl sm:text-3xl font-black text-neutral-100"
+                colors={{ first: '#10b981', second: '#06b6d4' }}
+              >
+                Halo, {debtor.name} 👋
+              </SparklesText>
             </h1>
             <p className="text-xs text-neutral-400 mt-1">
               Rincian riwayat pinjaman & cicilan kamu.
             </p>
           </div>
 
-          {/* Hero Card Saldo Sisa Utang */}
+          {/* Hero Card Saldo Sisa Utang dengan Ripple Effect */}
           <CardSpotlight
             color="#10b981"
             className="relative overflow-hidden border-emerald-500/40 bg-gradient-to-br from-neutral-900 via-neutral-900/90 to-emerald-950/30 p-6 shadow-2xl"
           >
             <Meteors number={15} />
             <BorderBeam size={220} duration={10} colorFrom="#10b981" colorTo="#06b6d4" />
+            <Ripple mainCircleSize={140} numCircles={5} mainCircleOpacity={0.15} className="z-0" />
 
             <div className="relative z-10">
               <div className="flex items-center justify-between">
