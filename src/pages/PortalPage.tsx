@@ -14,13 +14,11 @@ import { CardSpotlight } from '@/components/ui/card-spotlight'
 import { CloudShader } from '@/components/ui/cloud-shader'
 import { Meteors } from '@/components/ui/meteors'
 import { NumberTicker } from '@/components/ui/number-ticker'
-import { BorderBeam } from '@/components/ui/border-beam'
 import { triggerSettledConfetti } from '@/components/ui/confetti'
 import { Particles } from '@/components/ui/particles'
 import { Spotlight } from '@/components/ui/spotlight'
 import { RetroGrid } from '@/components/ui/retro-grid'
 import { Ripple } from '@/components/ui/ripple'
-import { SparklesText } from '@/components/ui/sparkles-text'
 import { ProofModal } from '@/components/admin/ProofModal'
 import { formatRupiah, formatDate } from '@/lib/format'
 import { dbService } from '@/lib/db'
@@ -122,20 +120,14 @@ export function PortalPage({ token }: PortalPageProps) {
               />
               <span className="font-extrabold text-sm tracking-tight">UTANGMU</span>
             </div>
-            <span className="text-xs text-neutral-400 font-medium">{debtor.name}</span>
           </div>
         </header>
 
         <main className="max-w-xl mx-auto px-4 pt-6 space-y-6">
-          {/* Greeting dengan SparklesText */}
+          {/* Greeting */}
           <div>
-            <h1>
-              <SparklesText
-                className="text-2xl sm:text-3xl font-black text-neutral-100"
-                colors={{ first: '#10b981', second: '#06b6d4' }}
-              >
-                Halo, {debtor.name}
-              </SparklesText>
+            <h1 className="text-2xl sm:text-3xl font-black text-neutral-100 tracking-tight">
+              Halo, {debtor.name}
             </h1>
             <p className="text-xs text-neutral-400 mt-1">
               Rincian riwayat pinjaman dan pembayaran utang kamu.
@@ -147,7 +139,6 @@ export function PortalPage({ token }: PortalPageProps) {
             color="#10b981"
             className="relative overflow-hidden border-emerald-500/40 bg-gradient-to-br from-neutral-900 via-neutral-900/90 to-emerald-950/30 p-6 shadow-2xl"
           >
-            <BorderBeam size={220} duration={10} colorFrom="#10b981" colorTo="#06b6d4" />
             <Ripple mainCircleSize={140} numCircles={5} mainCircleOpacity={0.15} className="z-0" />
 
             <div className="relative z-10">

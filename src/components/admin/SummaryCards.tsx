@@ -1,7 +1,6 @@
 import { ArrowUpRight, CheckCircle2, DollarSign, Users } from 'lucide-react'
 import { CardSpotlight } from '@/components/ui/card-spotlight'
 import { NumberTicker } from '@/components/ui/number-ticker'
-import { BorderBeam } from '@/components/ui/border-beam'
 import { formatRupiah } from '@/lib/format'
 import type { Debtor } from '@/types'
 
@@ -23,7 +22,6 @@ export function SummaryCards({ debtors }: SummaryCardsProps) {
         color="#10b981"
         className="relative overflow-hidden border-emerald-500/30 bg-gradient-to-br from-emerald-950/40 via-neutral-900/60 to-neutral-900/80 p-5"
       >
-        <BorderBeam size={180} duration={8} colorFrom="#10b981" colorTo="#06b6d4" />
         <div className="flex items-center justify-between">
           <p className="text-xs font-semibold uppercase tracking-wider text-emerald-400">
             Total Piutang Belum Lunas

@@ -105,9 +105,6 @@ body {
 .animate-meteor,
 .animate-meteor-effect {
   animation: meteor 3.5s linear infinite;
-  animation-fill-mode: backwards;
-  transform: rotate(215deg) translateX(0);
-  opacity: 0;
   will-change: transform, opacity;
 }
 
