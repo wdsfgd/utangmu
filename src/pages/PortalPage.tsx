@@ -162,7 +162,8 @@ export function PortalPage({ token }: PortalPageProps) {
               </div>
 
               <div className="mt-4">
-                <div className="text-3xl sm:text-4xl font-black tracking-tight text-neutral-100">
+                <div className="text-3xl sm:text-4xl font-black tracking-tight text-neutral-100 flex items-baseline gap-1.5">
+                  <span className="text-xl sm:text-2xl font-bold text-neutral-400">Rp</span>
                   <NumberTicker value={summary.remaining_balance} />
                 </div>
                 {isSettled && (

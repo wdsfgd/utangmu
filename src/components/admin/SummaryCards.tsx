@@ -31,7 +31,8 @@ export function SummaryCards({ debtors }: SummaryCardsProps) {
           </div>
         </div>
         <div className="mt-3">
-          <div className="text-2xl sm:text-3xl font-extrabold text-neutral-100">
+          <div className="text-2xl sm:text-3xl font-extrabold text-neutral-100 flex items-baseline gap-1">
+            <span className="text-lg sm:text-xl font-bold text-neutral-400">Rp</span>
             <NumberTicker value={totalRemaining} />
           </div>
           <p className="mt-1 text-xs text-neutral-400">
@@ -54,7 +55,8 @@ export function SummaryCards({ debtors }: SummaryCardsProps) {
           </div>
         </div>
         <div className="mt-3">
-          <div className="text-2xl sm:text-3xl font-extrabold text-neutral-100">
+          <div className="text-2xl sm:text-3xl font-extrabold text-neutral-100 flex items-baseline gap-1">
+            <span className="text-lg sm:text-xl font-bold text-neutral-400">Rp</span>
             <NumberTicker value={totalPaid} />
           </div>
           <p className="mt-1 text-xs text-neutral-400">Uang kembali</p>
@@ -75,33 +77,33 @@ export function SummaryCards({ debtors }: SummaryCardsProps) {
           </div>
         </div>
         <div className="mt-3">
-          <div className="text-2xl sm:text-3xl font-extrabold text-neutral-100">
-            <span className="tabular-nums font-bold">{activeDebtorsCount}</span>
-            <span className="text-sm font-normal text-neutral-400 ml-1.5">orang</span>
+          <div className="text-2xl sm:text-3xl font-extrabold text-neutral-100 flex items-baseline gap-1">
+            <NumberTicker value={activeDebtorsCount} />
+            <span className="text-sm font-normal text-neutral-400 ml-1">orang</span>
           </div>
-          <p className="mt-1 text-xs text-neutral-400">Dari total {debtors.length} teman</p>
+          <p className="mt-1 text-xs text-neutral-400">Masih memiliki utang</p>
         </div>
       </CardSpotlight>
 
-      {/* Jumlah Piutang Lunas */}
+      {/* Sudah Lunas */}
       <CardSpotlight
         color="#10b981"
         className="p-5 border-neutral-800/80 bg-neutral-900/40"
       >
         <div className="flex items-center justify-between">
           <p className="text-xs font-semibold uppercase tracking-wider text-neutral-400">
-            Piutang Lunas
+            Sudah Lunas
           </p>
           <div className="rounded-lg bg-emerald-500/10 p-2 text-emerald-400">
             <CheckCircle2 className="h-5 w-5" />
           </div>
         </div>
         <div className="mt-3">
-          <div className="text-2xl sm:text-3xl font-extrabold text-neutral-100">
-            <span className="tabular-nums font-bold">{settledDebtorsCount}</span>
-            <span className="text-sm font-normal text-neutral-400 ml-1.5">orang</span>
+          <div className="text-2xl sm:text-3xl font-extrabold text-neutral-100 flex items-baseline gap-1">
+            <NumberTicker value={settledDebtorsCount} />
+            <span className="text-sm font-normal text-neutral-400 ml-1">orang</span>
           </div>
-          <p className="mt-1 text-xs text-neutral-400">Terselesaikan</p>
+          <p className="mt-1 text-xs text-neutral-400">Bebas utang</p>
         </div>
       </CardSpotlight>
     </div>
