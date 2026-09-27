@@ -19,9 +19,11 @@ export function Navbar({
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6">
         {/* Logo */}
         <div className="flex items-center gap-3">
-          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-emerald-400 to-teal-600 text-neutral-950 font-black text-lg shadow-lg shadow-emerald-500/20">
-            U
-          </div>
+          <img
+            src="/icon.png"
+            alt="Utangmu"
+            className="h-9 w-9 rounded-xl object-cover shadow-lg shadow-emerald-500/20 border border-white/10"
+          />
           <div className="flex items-center gap-2">
             <span className="font-extrabold tracking-tight text-lg text-neutral-100">UTANGMU</span>
             <span

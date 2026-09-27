@@ -115,9 +115,11 @@ export function PortalPage({ token }: PortalPageProps) {
         <header className="border-b border-white/5 bg-neutral-950/70 backdrop-blur-xl sticky top-0 z-30">
           <div className="max-w-xl mx-auto px-4 h-14 flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-emerald-400 to-teal-600 text-neutral-950 font-black text-xs flex items-center justify-center shadow-lg shadow-emerald-500/20">
-                U
-              </div>
+              <img
+                src="/icon.png"
+                alt="Utangmu"
+                className="h-8 w-8 rounded-lg object-cover shadow-lg shadow-emerald-500/20 border border-white/10"
+              />
               <span className="font-extrabold text-sm tracking-tight">UTANGMU</span>
             </div>
             <span className="text-xs text-neutral-400 font-medium">{debtor.name}</span>
