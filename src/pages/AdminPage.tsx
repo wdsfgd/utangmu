@@ -26,13 +26,9 @@ import { ShimmerButton } from '@/components/ui/shimmer-button'
 import { Particles } from '@/components/ui/particles'
 import { Spotlight } from '@/components/ui/spotlight'
 import { RetroGrid } from '@/components/ui/retro-grid'
-import { Marquee } from '@/components/ui/marquee'
-import { AnimatedGradientText } from '@/components/ui/animated-gradient-text'
-import { SparklesText } from '@/components/ui/sparkles-text'
 import { FloatingDock, type FloatingDockItem } from '@/components/ui/floating-dock'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import { formatRupiah } from '@/lib/format'
 import { dbService } from '@/lib/db'
 import type { Debtor, TransactionType } from '@/types'
 
@@ -201,30 +197,17 @@ export function AdminPage() {
         />
 
         <main className="mx-auto max-w-7xl px-4 sm:px-6 pt-6 space-y-6">
-          {/* Hero Section dengan Sparkles, FlipWords, & ShimmerButton */}
+          {/* Hero Section dengan FlipWords & ShimmerButton */}
           <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-neutral-900/90 via-neutral-900/70 to-emerald-950/30 p-6 sm:p-8 backdrop-blur-xl shadow-2xl">
             <div className="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between gap-5">
-              <div>
-                <div className="inline-flex items-center gap-2 mb-2">
-                  <span className="flex h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
-                  <AnimatedGradientText
-                    colorFrom="#10b981"
-                    colorTo="#06b6d4"
-                    className="text-xs font-bold uppercase tracking-wider"
-                  >
-                    Catatan Keuangan Real-Time
-                  </AnimatedGradientText>
-                </div>
-
-                <div className="flex flex-wrap items-center gap-3">
-                  <h1 className="text-2xl sm:text-4xl font-black tracking-tight text-neutral-100">
-                    Kelola
-                  </h1>
-                  <FlipWords
-                    words={['Piutang', 'Pembayaran', 'Catatan Teman', 'Bukti Transfer']}
-                    className="text-2xl sm:text-4xl font-black text-emerald-400"
-                  />
-                </div>
+              <div className="flex flex-wrap items-center gap-3">
+                <h1 className="text-2xl sm:text-4xl font-black tracking-tight text-neutral-100">
+                  Kelola
+                </h1>
+                <FlipWords
+                  words={['Piutang', 'Pembayaran', 'Catatan Teman', 'Bukti Transfer']}
+                  className="text-2xl sm:text-4xl font-black text-emerald-400"
+                />
               </div>
 
               <ShimmerButton
@@ -236,30 +219,6 @@ export function AdminPage() {
               </ShimmerButton>
             </div>
           </div>
-
-          {/* Activity Marquee Ticker */}
-          {debtors.length > 0 && (
-            <div className="relative overflow-hidden rounded-2xl border border-neutral-800/80 bg-neutral-900/40 backdrop-blur-md py-2">
-              <Marquee pauseOnHover className="[--duration:30s]">
-                {debtors.map((d) => (
-                  <div
-                    key={d.id}
-                    className="flex items-center gap-2.5 mx-3 px-3 py-1 rounded-xl bg-neutral-800/60 border border-neutral-700/50 text-xs"
-                  >
-                    <span className="font-bold text-neutral-200">{d.name}</span>
-                    <span className="text-neutral-500">•</span>
-                    <span className={d.status === 'SETTLED' ? 'text-emerald-400 font-semibold' : 'text-amber-400 font-semibold'}>
-                      {d.status === 'SETTLED' ? 'LUNAS' : formatRupiah(d.remaining_balance || 0)}
-                    </span>
-                    <span className="text-neutral-500">•</span>
-                    <span className="text-neutral-400 text-[11px]">
-                      {d.transactions?.length || 0} transaksi
-                    </span>
-                  </div>
-                ))}
-              </Marquee>
-            </div>
-          )}
 
           {/* Summary Stat Cards */}
           <SummaryCards debtors={debtors} />

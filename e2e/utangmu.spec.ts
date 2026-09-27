@@ -242,7 +242,7 @@ test.describe('Utangmu - End-to-End Test Suite', () => {
     await page.goto(portalUrl)
 
     // Verifikasi pesan Lunas di portal teman
-    await expect(page.getByText('🎉 LUNAS')).toBeVisible()
+    await expect(page.getByText('LUNAS').first()).toBeVisible()
     await expect(page.locator('text=Alhamdulillah, semua pinjaman telah terbayar lunas!')).toBeVisible()
   })
 })

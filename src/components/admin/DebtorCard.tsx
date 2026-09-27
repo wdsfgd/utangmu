@@ -146,7 +146,7 @@ export function DebtorCard({
         <div className="mt-3.5 rounded-xl border border-neutral-800 bg-neutral-900/90 p-2.5">
           <div className="flex items-center justify-between text-[11px] text-neutral-400 mb-1.5">
             <span className="font-semibold text-emerald-400 flex items-center gap-1">
-              🔗 Link Khusus {debtor.name}
+              Link Khusus {debtor.name}
             </span>
             <button
               onClick={handleRegenerate}
@@ -205,20 +205,20 @@ export function DebtorCard({
             variant="outline"
             data-testid="btn-borrow"
             onClick={() => onAddTransaction(debtor, 'BORROW')}
-            className="text-xs h-8.5 font-medium border-amber-900/40 text-amber-300 hover:bg-amber-950/30"
+            className="text-xs h-8.5 font-medium border-amber-900/40 text-amber-300 hover:bg-amber-950/30 inline-flex items-center justify-center gap-1.5 leading-none"
           >
-            <PlusCircle className="h-3.5 w-3.5 mr-1 text-amber-400" />
-            + Pinjam
+            <PlusCircle className="h-3.5 w-3.5 text-amber-400 shrink-0" />
+            <span>Pinjam</span>
           </Button>
           <Button
             size="sm"
             variant="outline"
             data-testid="btn-payment"
             onClick={() => onAddTransaction(debtor, 'PAYMENT')}
-            className="text-xs h-8.5 font-medium border-emerald-900/40 text-emerald-300 hover:bg-emerald-950/30"
+            className="text-xs h-8.5 font-medium border-emerald-900/40 text-emerald-300 hover:bg-emerald-950/30 inline-flex items-center justify-center gap-1.5 leading-none"
           >
-            <MinusCircle className="h-3.5 w-3.5 mr-1 text-emerald-400" />
-            + Catat Bayar
+            <MinusCircle className="h-3.5 w-3.5 text-emerald-400 shrink-0" />
+            <span>Catat Bayar</span>
           </Button>
         </div>
 

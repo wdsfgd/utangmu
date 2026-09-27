@@ -132,7 +132,7 @@ export function PortalPage({ token }: PortalPageProps) {
                 className="text-2xl sm:text-3xl font-black text-neutral-100"
                 colors={{ first: '#10b981', second: '#06b6d4' }}
               >
-                Halo, {debtor.name} 👋
+                Halo, {debtor.name}
               </SparklesText>
             </h1>
             <p className="text-xs text-neutral-400 mt-1">
@@ -155,7 +155,7 @@ export function PortalPage({ token }: PortalPageProps) {
                 </span>
                 {isSettled ? (
                   <Badge variant="success" className="text-xs px-2.5 py-0.5">
-                    🎉 LUNAS
+                    LUNAS
                   </Badge>
                 ) : summary.total_paid > 0 ? (
                   <Badge variant="secondary" className="bg-blue-950 text-blue-300 border-blue-800 text-xs">

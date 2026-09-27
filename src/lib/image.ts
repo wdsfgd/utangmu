@@ -102,8 +102,8 @@ export async function processProofImage({
     second: '2-digit',
   }).format(now)
 
-  const line1 = `📅 ${dateFormatted} WIB | 📍 ${locationText}`
-  const line2 = `🛡️ BUKTI TRANSAKSI UTANGMU ${debtorName ? `• ${debtorName}` : ''} ${amountText ? `• ${amountText}` : ''}`
+  const line1 = `${dateFormatted} WIB | Lokasi: ${locationText}`
+  const line2 = `BUKTI TRANSAKSI UTANGMU ${debtorName ? `• ${debtorName}` : ''} ${amountText ? `• ${amountText}` : ''}`
   const watermarkText = `${line1}\n${line2}`
 
   // 6. Gambar Watermark Bar semi-transparan di bagian bawah
