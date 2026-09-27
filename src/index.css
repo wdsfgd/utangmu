@@ -70,10 +70,10 @@ body {
 @keyframes meteor {
   0% {
     transform: rotate(215deg) translateX(0);
-    opacity: 1;
+    opacity: 0.95;
   }
   70% {
-    opacity: 1;
+    opacity: 0.95;
   }
   100% {
     transform: rotate(215deg) translateX(-1400px);
@@ -105,6 +105,10 @@ body {
 .animate-meteor,
 .animate-meteor-effect {
   animation: meteor 3.5s linear infinite;
+  animation-fill-mode: backwards;
+  transform: rotate(215deg) translateX(0);
+  opacity: 0;
+  will-change: transform, opacity;
 }
 
 .animate-meteor-effect::before {

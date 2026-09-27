@@ -172,10 +172,10 @@ export function AdminPage() {
       {/* GPU WebGL Cloud Shader */}
       <CloudShader />
 
-      {/* Interactive Floating Particles */}
+      {/* Interactive Floating Particles (hidden on mobile for 60fps performance) */}
       <Particles
-        className="pointer-events-none absolute inset-0 z-0"
-        quantity={65}
+        className="pointer-events-none absolute inset-0 z-0 hidden md:block"
+        quantity={45}
         ease={60}
         color="#10b981"
         refresh

@@ -20,9 +20,9 @@ export function Navbar({
         {/* Logo */}
         <div className="flex items-center gap-3">
           <img
-            src="/icon.png"
+            src="/icon.webp"
             alt="Utangmu"
-            className="h-9 w-9 rounded-xl object-cover shadow-lg shadow-emerald-500/20 border border-white/10"
+            className="h-9 w-9 object-contain drop-shadow-[0_0_12px_rgba(16,185,129,0.3)]"
           />
           <div className="flex items-center gap-2">
             <span className="font-extrabold tracking-tight text-lg text-neutral-100">UTANGMU</span>

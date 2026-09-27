@@ -1,12 +1,24 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 
 export function CloudShader({ className = '' }: { className?: string }) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null)
+  const [isMobile, setIsMobile] = useState(false)
 
   useEffect(() => {
+    // Deteksi perangkat mobile/layar sempit untuk menonaktifkan WebGL berat
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768 || (navigator.maxTouchPoints > 1 && window.innerWidth < 1024))
+    }
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
+
+  useEffect(() => {
+    if (isMobile) return
     const canvas = canvasRef.current
     if (!canvas) return
-    const gl = canvas.getContext('webgl')
+    const gl = canvas.getContext('webgl', { powerPreference: 'low-power', alpha: true })
     if (!gl) return
 
     const vsSource = `
@@ -41,7 +53,7 @@ export function CloudShader({ className = '' }: { className?: string }) {
       float fbm(in vec2 st) {
         float value = 0.0;
         float amplitude = 0.5;
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < 3; i++) {
           value += amplitude * noise(st);
           st *= 2.0;
           amplitude *= 0.5;
@@ -110,7 +122,14 @@ export function CloudShader({ className = '' }: { className?: string }) {
     gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer)
     gl.bufferData(
       gl.ARRAY_BUFFER,
-      new Float32Array([-1, -1, 1, -1, -1, 1, -1, 1, 1, -1, 1, 1]),
+      new Float32Array([
+        -1.0, -1.0,
+         1.0, -1.0,
+        -1.0,  1.0,
+        -1.0,  1.0,
+         1.0, -1.0,
+         1.0,  1.0,
+      ]),
       gl.STATIC_DRAW
     )
 
@@ -123,24 +142,35 @@ export function CloudShader({ className = '' }: { className?: string }) {
 
     const handleResize = () => {
       if (!canvas) return
-      canvas.width = canvas.parentElement?.clientWidth || window.innerWidth
-      canvas.height = canvas.parentElement?.clientHeight || window.innerHeight
+      // Downsampling canvas internal ke 384x216 untuk performa 60 FPS tinggi dan hemat GPU
+      const targetW = 384
+      const targetH = 216
+      canvas.width = targetW
+      canvas.height = targetH
       gl.viewport(0, 0, canvas.width, canvas.height)
     }
 
     handleResize()
     window.addEventListener('resize', handleResize)
 
+    let isVisible = true
+    const handleVisibility = () => {
+      isVisible = !document.hidden
+    }
+    document.addEventListener('visibilitychange', handleVisibility)
+
     const render = (now: number) => {
-      gl.useProgram(program)
-      gl.enableVertexAttribArray(posAttr)
-      gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer)
-      gl.vertexAttribPointer(posAttr, 2, gl.FLOAT, false, 0, 0)
+      if (isVisible) {
+        gl.useProgram(program)
+        gl.enableVertexAttribArray(posAttr)
+        gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer)
+        gl.vertexAttribPointer(posAttr, 2, gl.FLOAT, false, 0, 0)
 
-      gl.uniform2f(resUniform, canvas.width, canvas.height)
-      gl.uniform1f(timeUniform, (now - startTime) * 0.0003)
+        gl.uniform2f(resUniform, canvas.width, canvas.height)
+        gl.uniform1f(timeUniform, (now - startTime) * 0.0003)
 
-      gl.drawArrays(gl.TRIANGLES, 0, 6)
+        gl.drawArrays(gl.TRIANGLES, 0, 6)
+      }
       animId = requestAnimationFrame(render)
     }
 
@@ -149,8 +179,17 @@ export function CloudShader({ className = '' }: { className?: string }) {
     return () => {
       cancelAnimationFrame(animId)
       window.removeEventListener('resize', handleResize)
+      document.removeEventListener('visibilitychange', handleVisibility)
     }
-  }, [])
+  }, [isMobile])
+
+  if (isMobile) {
+    return (
+      <div
+        className={`pointer-events-none absolute inset-0 h-full w-full bg-[radial-gradient(ellipse_80%_50%_at_50%_0%,rgba(16,185,129,0.18),transparent_75%)] opacity-70 ${className}`}
+      />
+    )
+  }
 
   return (
     <canvas

@@ -98,8 +98,8 @@ export function PortalPage({ token }: PortalPageProps) {
       <Spotlight className="-top-40 left-0 md:left-20" fill="#10b981" />
       <CloudShader />
       <Particles
-        className="pointer-events-none absolute inset-0 z-0"
-        quantity={50}
+        className="pointer-events-none absolute inset-0 z-0 hidden md:block"
+        quantity={35}
         ease={65}
         color="#10b981"
         refresh
@@ -116,9 +116,9 @@ export function PortalPage({ token }: PortalPageProps) {
           <div className="max-w-xl mx-auto px-4 h-14 flex items-center justify-between">
             <div className="flex items-center gap-2">
               <img
-                src="/icon.png"
+                src="/icon.webp"
                 alt="Utangmu"
-                className="h-8 w-8 rounded-lg object-cover shadow-lg shadow-emerald-500/20 border border-white/10"
+                className="h-8 w-8 object-contain drop-shadow-[0_0_10px_rgba(16,185,129,0.3)]"
               />
               <span className="font-extrabold text-sm tracking-tight">UTANGMU</span>
             </div>
